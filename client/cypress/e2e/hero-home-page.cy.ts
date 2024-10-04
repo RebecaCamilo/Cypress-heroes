@@ -48,6 +48,15 @@ describe("hero-home-page", () => {
         it.only('login with empty user and pass', () => {
             cy.visit('http://localhost:3000/heroes');
             cy.contains('button', 'Login').click();
+
+            cy.contains('h5', 'Login').should('be.visible');
+            cy.get('[data-cy="email"]').should('exist');
+            cy.get('[data-cy="password"]').should('exist');
+
+            cy.contains('button', 'Sign in').should('be.visible').click();
+
+            cy.contains('div', 'Email is required').should('be.visible');
+            cy.contains('div', 'Password is required').should('be.visible');
         })
     })
   });
