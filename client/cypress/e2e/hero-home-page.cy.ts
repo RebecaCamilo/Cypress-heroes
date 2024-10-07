@@ -45,7 +45,7 @@ describe("hero-home-page", () => {
     });
 
     describe('Verify error messages in Login modal', () => {
-        it.only('login with empty user and pass', () => {
+        it('login with empty user and pass', () => {
             cy.visit('http://localhost:3000/heroes');
             cy.contains('button', 'Login').click();
 
@@ -60,7 +60,20 @@ describe("hero-home-page", () => {
 
             cy.contains('div', 'Password is required').should('be.visible');
             cy.contains('div', 'Password is required').prev('label').should('have.text', 'Password');
-        })
+        });
+
+        it.only('login with invalid email', () => {
+            cy.visit('http://localhost:3000/heroes');
+            cy.contains('button', 'Login').click();
+
+            cy.get('[data-cy="email"]').type('invalidEmail');
+            cy.get('[data-cy="password"]').type('pass');
+
+            cy.contains('button', 'Sign in').should('be.visible').click();
+
+            cy.contains('div', 'Email is not valid').should('be.visible');
+            cy.contains('div', 'Email is not valid').prev('label').should('have.text', 'Email');
+        });
     })
   });
   
