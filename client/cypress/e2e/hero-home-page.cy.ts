@@ -56,7 +56,10 @@ describe("hero-home-page", () => {
             cy.contains('button', 'Sign in').should('be.visible').click();
 
             cy.contains('div', 'Email is required').should('be.visible');
+            cy.contains('div', 'Email is required').prev('label').should('have.text', 'Email');
+
             cy.contains('div', 'Password is required').should('be.visible');
+            cy.contains('div', 'Password is required').prev('label').should('have.text', 'Password');
         })
     })
   });
