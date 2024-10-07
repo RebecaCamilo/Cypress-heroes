@@ -62,7 +62,7 @@ describe("hero-home-page", () => {
             cy.contains('div', 'Password is required').prev('label').should('have.text', 'Password');
         });
 
-        it.only('login with invalid email', () => {
+        it('login with invalid email', () => {
             cy.visit('http://localhost:3000/heroes');
             cy.contains('button', 'Login').click();
 
@@ -73,6 +73,19 @@ describe("hero-home-page", () => {
 
             cy.contains('div', 'Email is not valid').should('be.visible');
             cy.contains('div', 'Email is not valid').prev('label').should('have.text', 'Email');
+        });
+        
+        it.only('login with wrong email and password', () => {
+            cy.visit('http://localhost:3000/heroes');
+            cy.contains('button', 'Login').click();
+
+            cy.get('[data-cy="email"]').type('invalidEmail@mail.com');
+            cy.get('[data-cy="password"]').type('pass');
+
+            cy.contains('button', 'Sign in').should('be.visible').click();
+
+            cy.contains('div', 'Invalid email or password').should('be.visible');
+            cy.contains('button', 'Sign in').prev('div').should('have.text', 'Invalid email or password');
         });
     })
   });
