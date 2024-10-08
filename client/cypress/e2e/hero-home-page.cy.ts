@@ -96,11 +96,23 @@ describe("hero-home-page", () => {
 
             cy.get('[data-cy="email"]').type('test@test.com');
             cy.get('[data-cy="password"]').type('test123');
-
             cy.contains('button', 'Sign in').click();
+
+            cy.contains('button', 'Logout').should('be.visible');
+        });
+
+        it.only('reload the page by clicking in title and still logged', () => {
+            cy.visit('http://localhost:3000/heroes');
+
+            cy.contains('button', 'Login').click();
+            cy.get('[data-cy="email"]').type('test@test.com');
+            cy.get('[data-cy="password"]').type('test123');
+            cy.contains('button', 'Sign in').click();
+
+            cy.get('img[alt="Cypress Heroes Logo"]').click();
             cy.contains('button', 'Logout').should('be.visible');
         });
     })
-    
+
   });
   
