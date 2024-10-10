@@ -133,21 +133,12 @@ describe("hero-home-page", () => {
       cy.get('[data-cy="password"]').type("test123");
       cy.contains("button", "Sign in").click();
 
-      cy.get('[data-cy="fans"]')
-        .first()
-        .invoke("text")
-        .then((fansNumber) => {
+      cy.get('[data-cy="fans"]').first().invoke("text").then((fansNumber) => {
           let initialFansNumber = parseInt(fansNumber);
 
-          cy.get('[data-cy="hero-card"]')
-            .first()
-            .find('[data-cy="like"]')
-            .click();
+          cy.get('[data-cy="hero-card"]').first().find('[data-cy="like"]').click();
 
-          cy.get('[data-cy="fans"]')
-            .first()
-            .invoke("text")
-            .then((updatedFansNumber) => {
+          cy.get('[data-cy="fans"]').first().invoke("text").then((updatedFansNumber) => {
               expect(initialFansNumber + 1).to.eq(parseInt(updatedFansNumber));
             });
         });
