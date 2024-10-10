@@ -124,6 +124,34 @@ describe("hero-home-page", () => {
       cy.get('img[alt="Cypress Heroes Logo"]').click();
       cy.contains("button", "Logout").should("be.visible");
     });
+
+    it.only("Logged user liked a hero", () => {
+      cy.visit("http://localhost:3000/heroes");
+
+      cy.contains("button", "Login").click();
+      cy.get('[data-cy="email"]').type("test@test.com");
+      cy.get('[data-cy="password"]').type("test123");
+      cy.contains("button", "Sign in").click();
+
+      cy.get('[data-cy="fans"]')
+        .first()
+        .invoke("text")
+        .then((fansNumber) => {
+          let initialFansNumber = parseInt(fansNumber);
+
+          cy.get('[data-cy="hero-card"]')
+            .first()
+            .find('[data-cy="like"]')
+            .click();
+
+          cy.get('[data-cy="fans"]')
+            .first()
+            .invoke("text")
+            .then((updatedFansNumber) => {
+              expect(initialFansNumber + 1).to.eq(parseInt(updatedFansNumber));
+            });
+        });
+    });
     
   });
 });
