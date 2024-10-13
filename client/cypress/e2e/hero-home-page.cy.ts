@@ -165,7 +165,7 @@ describe("hero-home-page", () => {
         });
     });
     
-    it.only("Logged user dont donate to a hero", () => {
+    it("Logged user dont donate to a hero", () => {
       cy.visit("http://localhost:3000/heroes");
 
       cy.contains("button", "Login").click();
@@ -184,6 +184,19 @@ describe("hero-home-page", () => {
               expect(initialSavesNumber).to.eq(parseInt(updatedSavesNumber));
             });
         });
+    });
+
+    it.only("Logged user loggout", () => {
+      cy.visit("http://localhost:3000/heroes");
+
+      cy.contains("button", "Login").click();
+      cy.get('[data-cy="email"').type("test@test.com");
+      cy.get('[data-cy="password"').type("test123");
+      cy.contains("button", "Sign in").click();
+
+      cy.contains("button", "Logout").click();
+      
+      cy.contains("button", "Login").should("be.visible");
     });
     
   });
