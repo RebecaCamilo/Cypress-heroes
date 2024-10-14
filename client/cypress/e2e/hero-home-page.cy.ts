@@ -186,7 +186,7 @@ describe("hero-home-page", () => {
         });
     });
 
-    it.only("Logged user loggout", () => {
+    it("Logged user loggout", () => {
       cy.visit("http://localhost:3000/heroes");
 
       cy.contains("button", "Login").click();
@@ -199,5 +199,18 @@ describe("hero-home-page", () => {
       cy.contains("button", "Login").should("be.visible");
     });
     
+  });
+
+  describe("Adm logged user", () => {
+    it.only("Successful  login", () => {
+      cy.visit("http://localhost:3000/heroes");
+      cy.contains("button", "Login").click();
+
+      cy.get('[data-cy="email"]').type("admin@test.com");
+      cy.get('[data-cy="password"]').type("test123");
+      cy.contains("button", "Sign in").click();
+
+      cy.contains("button", "Logout").should("be.visible");
+    });
   });
 });
