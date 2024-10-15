@@ -133,12 +133,21 @@ describe("hero-home-page", () => {
       cy.get('[data-cy="password"]').type("test123");
       cy.contains("button", "Sign in").click();
 
-      cy.get('[data-cy="fans"]').first().invoke("text").then((fansNumber) => {
+      cy.get('[data-cy="fans"]')
+        .first()
+        .invoke("text")
+        .then((fansNumber) => {
           let initialFansNumber = parseInt(fansNumber);
 
-          cy.get('[data-cy="hero-card"]').first().find('[data-cy="like"]').click();
+          cy.get('[data-cy="hero-card"]')
+            .first()
+            .find('[data-cy="like"]')
+            .click();
 
-          cy.get('[data-cy="fans"]').first().invoke("text").then((updatedFansNumber) => {
+          cy.get('[data-cy="fans"]')
+            .first()
+            .invoke("text")
+            .then((updatedFansNumber) => {
               expect(initialFansNumber + 1).to.eq(parseInt(updatedFansNumber));
             });
         });
@@ -152,19 +161,29 @@ describe("hero-home-page", () => {
       cy.get('[data-cy="password"]').type("test123");
       cy.contains("button", "Sign in").click();
 
-      cy.get('[data-cy="saves"]').first().invoke("text").then((savesNumber) => {
+      cy.get('[data-cy="saves"]')
+        .first()
+        .invoke("text")
+        .then((savesNumber) => {
           let initialSavesNumber = parseInt(savesNumber);
 
-          cy.get('[data-cy="hero-card"]').first().find('[data-cy="money"]').click();
+          cy.get('[data-cy="hero-card"]')
+            .first()
+            .find('[data-cy="money"]')
+            .click();
           cy.contains("button", "Yes").click();
 
-
-          cy.get('[data-cy="saves"]').first().invoke("text").then((updatedSavesNumber) => {
-              expect(initialSavesNumber + 1).to.eq(parseInt(updatedSavesNumber));
+          cy.get('[data-cy="saves"]')
+            .first()
+            .invoke("text")
+            .then((updatedSavesNumber) => {
+              expect(initialSavesNumber + 1).to.eq(
+                parseInt(updatedSavesNumber)
+              );
             });
         });
     });
-    
+
     it("Logged user dont donate to a hero", () => {
       cy.visit("http://localhost:3000/heroes");
 
@@ -173,14 +192,22 @@ describe("hero-home-page", () => {
       cy.get('[data-cy="password"]').type("test123");
       cy.contains("button", "Sign in").click();
 
-      cy.get('[data-cy="saves"]').first().invoke("text").then((savesNumber) => {
+      cy.get('[data-cy="saves"]')
+        .first()
+        .invoke("text")
+        .then((savesNumber) => {
           let initialSavesNumber = parseInt(savesNumber);
 
-          cy.get('[data-cy="hero-card"]').first().find('[data-cy="money"]').click();
+          cy.get('[data-cy="hero-card"]')
+            .first()
+            .find('[data-cy="money"]')
+            .click();
           cy.contains("button", "No").click();
 
-
-          cy.get('[data-cy="saves"]').first().invoke("text").then((updatedSavesNumber) => {
+          cy.get('[data-cy="saves"]')
+            .first()
+            .invoke("text")
+            .then((updatedSavesNumber) => {
               expect(initialSavesNumber).to.eq(parseInt(updatedSavesNumber));
             });
         });
@@ -195,10 +222,9 @@ describe("hero-home-page", () => {
       cy.contains("button", "Sign in").click();
 
       cy.contains("button", "Logout").click();
-      
+
       cy.contains("button", "Login").should("be.visible");
     });
-    
   });
 
   describe("Adm logged user", () => {
@@ -221,18 +247,27 @@ describe("hero-home-page", () => {
       cy.get('[data-cy="password"]').type("test123");
       cy.contains("button", "Sign in").click();
 
-      cy.get('[data-cy="fans"]').first().invoke("text").then((fansNumber) => {
-        let initialFansNumber = parseInt(fansNumber);
-  
-        cy.get('[data-cy="hero-card"]').first().find('[data-cy="like"]').click();
-  
-        cy.get('[data-cy="fans"]').first().invoke("text").then((updatedFansNumber) => {
-            expect(initialFansNumber + 1).to.eq(parseInt(updatedFansNumber));
-          });
-      });      
+      cy.get('[data-cy="fans"]')
+        .first()
+        .invoke("text")
+        .then((fansNumber) => {
+          let initialFansNumber = parseInt(fansNumber);
+
+          cy.get('[data-cy="hero-card"]')
+            .first()
+            .find('[data-cy="like"]')
+            .click();
+
+          cy.get('[data-cy="fans"]')
+            .first()
+            .invoke("text")
+            .then((updatedFansNumber) => {
+              expect(initialFansNumber + 1).to.eq(parseInt(updatedFansNumber));
+            });
+        });
     });
-    
-    it("Logged admin user donate to a hero", () => {
+
+    it.only("Logged admin user donate to a hero", () => {
       cy.visit("http://localhost:3000/heroes");
       cy.contains("button", "Login").click();
 
@@ -240,18 +275,49 @@ describe("hero-home-page", () => {
       cy.get('[data-cy="password"]').type("test123");
       cy.contains("button", "Sign in").click();
 
-      cy.get('[data-cy="saves"]').first().invoke("text").then((savesNumber) => {
-        let initialSavesNumber = parseInt(savesNumber);
+      cy.get('[data-cy="saves"]')
+        .first()
+        .invoke("text")
+        .then((savesNumber) => {
+          let initialSavesNumber = parseInt(savesNumber);
 
-        cy.get('[data-cy="hero-card"]').first().find('[data-cy="money"]').click();
-        cy.contains("button", "Yes").click();
+          cy.get('[data-cy="hero-card"]')
+            .first()
+            .find('[data-cy="money"]')
+            .click();
+          cy.contains("button", "Yes").click();
 
-
-        cy.get('[data-cy="saves"]').first().invoke("text").then((updatedSavesNumber) => {
-            expect(initialSavesNumber + 1).to.eq(parseInt(updatedSavesNumber));
-          });
-      });      
+          cy.get('[data-cy="saves"]')
+            .first()
+            .invoke("text")
+            .then((updatedSavesNumber) => {
+              expect(initialSavesNumber + 1).to.eq(
+                parseInt(updatedSavesNumber)
+              );
+            });
+        });
     });
 
+    it("Logged admin user delete hero by trash button in home page", () => {
+      cy.visit("http://localhost:3000/heroes");
+      cy.contains("button", "Login").click();
+
+      cy.get('[data-cy="email"]').type("admin@test.com");
+      cy.get('[data-cy="password"]').type("test123");
+      cy.contains("button", "Sign in").click();
+
+      // Captura o nome do herói no primeiro card
+      cy.get('[data-cy="hero-card"]').first().find("h5").invoke("text").then((heroName) => {
+
+          // Exclui o herói clicando no ícone de lixeira no primeiro card
+          cy.get('[data-cy="hero-card"]').first().find('[data-cy="trash"]').click();
+
+          // Confirma a exclusão se necessário
+          cy.contains("button", "Yes").click();  // Descomente se houver confirmação
+
+          // Verifica que o card com o nome do herói não existe mais
+          cy.get('[data-cy="hero-card"]').should("not.contain", heroName);
+        });
+    });
   });
 });
