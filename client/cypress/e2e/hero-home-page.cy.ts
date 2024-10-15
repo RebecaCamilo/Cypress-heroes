@@ -213,7 +213,7 @@ describe("hero-home-page", () => {
       cy.contains("button", "Logout").should("be.visible");
     });
 
-    it.only("Logged admin user liked a hero", () => {
+    it("Logged admin user liked a hero", () => {
       cy.visit("http://localhost:3000/heroes");
       cy.contains("button", "Login").click();
 
@@ -231,8 +231,8 @@ describe("hero-home-page", () => {
           });
       });      
     });
-
-    it.only("Logged admin user liked a hero", () => {
+    
+    it("Logged admin user donate to a hero", () => {
       cy.visit("http://localhost:3000/heroes");
       cy.contains("button", "Login").click();
 
@@ -252,5 +252,6 @@ describe("hero-home-page", () => {
           });
       });      
     });
+
   });
 });
