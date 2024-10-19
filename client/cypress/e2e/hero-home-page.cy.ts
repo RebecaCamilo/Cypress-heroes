@@ -1,9 +1,14 @@
 /// <reference types="cypress" />
 
 describe("hero-home-page", () => {
+
+  beforeEach(() => {
+    cy.visit("/");
+  });
+
   describe("User not logged", () => {
     it("reload the page by clicking in title and still not logged", () => {
-      cy.visit("http://localhost:3000/heroes");
+      
       cy.contains("button", "Login").should("be.visible");
 
       cy.get('img[alt="Cypress Heroes Logo"]').click();
@@ -11,7 +16,6 @@ describe("hero-home-page", () => {
     });
 
     it("like hero should alert the user need to login", () => {
-      cy.visit("http://localhost:3000/heroes");
       cy.get('button[data-cy="like"]').first().click();
 
       cy.get(".open.modal").should("be.visible");
@@ -20,7 +24,6 @@ describe("hero-home-page", () => {
     });
 
     it("donate to hero should alert the user need to login", () => {
-      cy.visit("http://localhost:3000/heroes");
       cy.get('button[data-cy="money"]').first().click();
 
       cy.get(".open.modal").should("be.visible");
@@ -31,7 +34,6 @@ describe("hero-home-page", () => {
     });
 
     it("user not logged can see the login button", () => {
-      cy.visit("http://localhost:3000/heroes");
       cy.contains("button", "Login").click();
 
       cy.contains("h5", "Login").should("be.visible");
@@ -50,7 +52,6 @@ describe("hero-home-page", () => {
 
   describe("Verify error messages in Login modal", () => {
     it("login with empty user and pass", () => {
-      cy.visit("http://localhost:3000/heroes");
       cy.contains("button", "Login").click();
 
       cy.contains("h5", "Login").should("be.visible");
@@ -71,7 +72,6 @@ describe("hero-home-page", () => {
     });
 
     it("login with invalid email", () => {
-      cy.visit("http://localhost:3000/heroes");
       cy.contains("button", "Login").click();
 
       cy.get('[data-cy="email"]').type("invalidEmail");
@@ -86,7 +86,6 @@ describe("hero-home-page", () => {
     });
 
     it("login with wrong email and password", () => {
-      cy.visit("http://localhost:3000/heroes");
       cy.contains("button", "Login").click();
 
       cy.get('[data-cy="email"]').type("invalidEmail@mail.com");
@@ -103,7 +102,6 @@ describe("hero-home-page", () => {
 
   describe("Logged user", () => {
     it("Successful  login", () => {
-      cy.visit("http://localhost:3000/heroes");
       cy.contains("button", "Login").click();
 
       cy.get('[data-cy="email"]').type("test@test.com");
@@ -114,7 +112,6 @@ describe("hero-home-page", () => {
     });
 
     it("reload the page by clicking in title and still logged", () => {
-      cy.visit("http://localhost:3000/heroes");
 
       cy.contains("button", "Login").click();
       cy.get('[data-cy="email"]').type("test@test.com");
@@ -126,7 +123,6 @@ describe("hero-home-page", () => {
     });
 
     it("Logged user liked a hero", () => {
-      cy.visit("http://localhost:3000/heroes");
 
       cy.contains("button", "Login").click();
       cy.get('[data-cy="email"]').type("test@test.com");
@@ -154,7 +150,6 @@ describe("hero-home-page", () => {
     });
 
     it("Logged user donate to a hero", () => {
-      cy.visit("http://localhost:3000/heroes");
 
       cy.contains("button", "Login").click();
       cy.get('[data-cy="email"]').type("test@test.com");
@@ -185,7 +180,6 @@ describe("hero-home-page", () => {
     });
 
     it("Logged user dont donate to a hero", () => {
-      cy.visit("http://localhost:3000/heroes");
 
       cy.contains("button", "Login").click();
       cy.get('[data-cy="email"]').type("test@test.com");
@@ -214,7 +208,6 @@ describe("hero-home-page", () => {
     });
 
     it("Logged user loggout", () => {
-      cy.visit("http://localhost:3000/heroes");
 
       cy.contains("button", "Login").click();
       cy.get('[data-cy="email"').type("test@test.com");
@@ -229,7 +222,6 @@ describe("hero-home-page", () => {
 
   describe("Adm logged user", () => {
     it("Successful login as adm user", () => {
-      cy.visit("http://localhost:3000/heroes");
       cy.contains("button", "Login").click();
 
       cy.get('[data-cy="email"]').type("admin@test.com");
@@ -240,7 +232,6 @@ describe("hero-home-page", () => {
     });
 
     it("Logged admin user liked a hero", () => {
-      cy.visit("http://localhost:3000/heroes");
       cy.contains("button", "Login").click();
 
       cy.get('[data-cy="email"]').type("admin@test.com");
@@ -268,7 +259,6 @@ describe("hero-home-page", () => {
     });
 
     it("Logged admin user donate to a hero", () => {
-      cy.visit("http://localhost:3000/heroes");
       cy.contains("button", "Login").click();
 
       cy.get('[data-cy="email"]').type("admin@test.com");
@@ -299,7 +289,6 @@ describe("hero-home-page", () => {
     });
 
     it.skip("Logged admin user delete hero by trash button in home page", () => {
-      cy.visit("http://localhost:3000/heroes");
       cy.contains("button", "Login").click();
 
       cy.get('[data-cy="email"]').type("admin@test.com");
@@ -321,7 +310,6 @@ describe("hero-home-page", () => {
     });
 
     it("Logged admin user loggout", () => {
-      cy.visit("http://localhost:3000/heroes");
       cy.contains("button", "Login").click();
 
       cy.get('[data-cy="email"]').type("admin@test.com");
@@ -334,7 +322,6 @@ describe("hero-home-page", () => {
     });
 
     it.skip("Logged admin user delete hero by delete button in edit page", () => {
-      cy.visit("http://localhost:3000/heroes");
       cy.contains("button", "Login").click();
 
       cy.get('[data-cy="email"]').type("admin@test.com");
