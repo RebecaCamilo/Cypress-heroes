@@ -320,7 +320,7 @@ describe("hero-home-page", () => {
         });
     });
 
-    it.only("Logged admin user loggout", () => {
+    it("Logged admin user loggout", () => {
       cy.visit("http://localhost:3000/heroes");
       cy.contains("button", "Login").click();
 
@@ -331,6 +331,20 @@ describe("hero-home-page", () => {
       cy.contains("button", "Logout").click();
 
       cy.contains("button", "Login").should("be.visible");
+    });
+
+    it.skip("Logged admin user delete hero by delete button in edit page", () => {
+      cy.visit("http://localhost:3000/heroes");
+      cy.contains("button", "Login").click();
+
+      cy.get('[data-cy="email"]').type("admin@test.com");
+      cy.get('[data-cy="password"]').type("test123");
+      cy.contains("button", "Sign in").click();
+
+      cy.get('[data-cy="pencil"]').first().click();
+
+      cy.contains('button', 'Delete Hero').click();
+      cy.contains('button', 'Yes').click();
     });
   });
 });
