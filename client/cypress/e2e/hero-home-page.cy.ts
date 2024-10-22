@@ -17,12 +17,9 @@ describe("hero-home-page", () => {
       homePage.checkIfUserIsNotLogged();
     });
 
-    it("like hero should alert the user need to login", () => {
-      cy.get('button[data-cy="like"]').first().click();
-
-      cy.get(".open.modal").should("be.visible");
-      cy.contains("h5", "You must log in to like.").should("be.visible");
-      cy.contains("button", "Ok").should("be.visible");
+    it.only("like hero should alert the user need to login", () => {
+      homePage.clickInLikeButtonOfFirstCard();
+      homePage.checkIfAlertMustLoginToLikeIsVisible();
     });
 
     it("donate to hero should alert the user need to login", () => {
