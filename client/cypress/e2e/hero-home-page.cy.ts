@@ -1,5 +1,9 @@
 /// <reference types="cypress" />
 
+import HomePage from "../pages/homePage"
+
+const homePage = new HomePage()
+
 describe("hero-home-page", () => {
 
   beforeEach(() => {
@@ -7,12 +11,10 @@ describe("hero-home-page", () => {
   });
 
   describe("User not logged", () => {
-    it("reload the page by clicking in title and still not logged", () => {
-      
-      cy.contains("button", "Login").should("be.visible");
-
-      cy.get('img[alt="Cypress Heroes Logo"]').click();
-      cy.contains("button", "Login").should("be.visible");
+    it.only("reload the page by clicking in title and still not logged", () => {
+      homePage.checkIfUserIsNotLogged();
+      homePage.clickInLogo();
+      homePage.checkIfUserIsNotLogged();
     });
 
     it("like hero should alert the user need to login", () => {
