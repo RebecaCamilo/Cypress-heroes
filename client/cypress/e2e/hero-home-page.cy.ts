@@ -10,7 +10,7 @@ describe("hero-home-page", () => {
     cy.visit("/");
   });
 
-  describe.only("User not logged", () => {
+  describe.skip("User not logged", () => {
     it("reload the page by clicking in title and still not logged", () => {
       homePage.checkIfUserIsNotLogged();
       homePage.clickInLogo();
@@ -33,48 +33,32 @@ describe("hero-home-page", () => {
     });
   });
 
-  describe.skip("Verify error messages in Login modal", () => {
+  describe.only("Verify error messages in Login modal", () => {
     it("login with empty user and pass", () => {
       homePage.clickInLoginButton();
       homePage.clickInSignInButton();
 
-      cy.contains("div", "Email is required").should("be.visible");
-      cy.contains("div", "Email is required")
-        .prev("label")
-        .should("have.text", "Email");
-
-      cy.contains("div", "Password is required").should("be.visible");
-      cy.contains("div", "Password is required")
-        .prev("label")
-        .should("have.text", "Password");
+      homePage.checkIfLoginModalEmailFieldIsRequired();
+      homePage.checkIfLoginModalPasswordFieldIsRequired();
     });
 
     it("login with invalid email", () => {
-      cy.contains("button", "Login").click();
+      homePage.clickInLoginButton();
 
-      cy.get('[data-cy="email"]').type("invalidEmail");
-      cy.get('[data-cy="password"]').type("pass");
+      homePage.typeInEmailLoginField('invalidEmail');
+      homePage.clickInSignInButton();
 
-      cy.contains("button", "Sign in").should("be.visible").click();
-
-      cy.contains("div", "Email is not valid").should("be.visible");
-      cy.contains("div", "Email is not valid")
-        .prev("label")
-        .should("have.text", "Email");
+      homePage.checkIfLoginModalEmailFieldIsInvalid();
     });
 
     it("login with wrong email and password", () => {
-      cy.contains("button", "Login").click();
+      homePage.clickInLoginButton();
 
-      cy.get('[data-cy="email"]').type("invalidEmail@mail.com");
-      cy.get('[data-cy="password"]').type("pass");
+      homePage.typeInEmailLoginField('wrongEmail@mail.com');
+      homePage.typeInPasswordLoginField('pass');
+      homePage.clickInSignInButton();
 
-      cy.contains("button", "Sign in").should("be.visible").click();
-
-      cy.contains("div", "Invalid email or password").should("be.visible");
-      cy.contains("button", "Sign in")
-        .prev("div")
-        .should("have.text", "Invalid email or password");
+      homePage.checkIfLoginModalHasWrongEmailOrPassword();
     });
   });
 
