@@ -3,11 +3,19 @@ class HomePage {
     selectorsList() {
       return {
         loginButtonText: 'Login',
+        signInButtonText: 'Sign in',
         cyHeroesLogo: 'img[alt="Cypress Heroes Logo"]',
         likeButton: 'button[data-cy="like"]',
+        moneyButton: 'button[data-cy="money"]',
         alertModalMustLoginTo: '.open.modal',
-        textOfAlertModalMustLoginTo: 'You must log in to like.',
-        textoOkButtonOfAlertModalMustLoginTo: 'Ok',
+        textOfAlertModalMustLoginToLike: 'You must log in to like.',
+        textOfAlertModalMustLoginToHire: 'You must log in to hire this hero.',
+        textoOkButtonOfAlertModalMustLogin: 'Ok',
+        loginModalTitle: 'Login',
+        loginEmailField: '[data-cy="email"]',
+        loginPasswordField: '[data-cy="password"]',
+        loginEmailFieldLabel: 'Email',
+        loginPasswordFieldLabel: 'Password',
         // searchField: 'input[placeholder="Search Amazon"]',
         // searchButton: "#nav-search-submit-button",
         // listOfProducts: "div .s-result-list > div",
@@ -27,24 +35,47 @@ class HomePage {
       cy.get(this.selectorsList().likeButton).first().click();
     }
 
-    checkIfAlertMustLoginToLikeIsVisible() {
-      cy.get(this.selectorsList().alertModalMustLoginTo).should("be.visible");
-      cy.contains("h5", this.selectorsList().textOfAlertModalMustLoginTo).should("be.visible");
-      cy.contains("button", this.selectorsList().textoOkButtonOfAlertModalMustLoginTo).should("be.visible");
+    clickInMoneyButtonOfFirstCard() {
+      cy.get(this.selectorsList().moneyButton).first().click();
     }
 
+    clickInLoginButton() {
+      cy.contains("button", this.selectorsList().loginButtonText).click();
+    }
 
+    clickInSignInButton() {
+      cy.contains("button", this.selectorsList().signInButtonText).click();
+    }
 
-    /**
-     * it("like hero should alert the user need to login", () => {
-      cy.get('button[data-cy="like"]').first().click();
+    checkIfAlertMustLoginToLikeIsVisible() {
+      cy.get(this.selectorsList().alertModalMustLoginTo).should("be.visible");
+      cy.contains("h5", this.selectorsList().textOfAlertModalMustLoginToLike).should("be.visible");
+      cy.contains("button", this.selectorsList().textoOkButtonOfAlertModalMustLogin).should("be.visible");
+    }
 
-      cy.get(".open.modal").should("be.visible");
-      cy.contains("h5", "You must log in to like.").should("be.visible");
-      cy.contains("button", "Ok").should("be.visible");
-    });
-     */
-      
+    checkIfAlertMustLoginToHireIsVisible() {
+      cy.get(this.selectorsList().alertModalMustLoginTo).should("be.visible");
+      cy.contains("h5", this.selectorsList().textOfAlertModalMustLoginToHire).should("be.visible");
+      cy.contains("button", this.selectorsList().textoOkButtonOfAlertModalMustLogin).should("be.visible");
+    }
+
+    checkIfLoginModalIsVisible() {
+      cy.get(this.selectorsList().alertModalMustLoginTo).should("be.visible");
+      cy.contains("h5", this.selectorsList().loginModalTitle).should("be.visible");
+
+      cy.get(this.selectorsList().loginEmailField).should("exist");
+      cy.get(this.selectorsList().loginEmailField)
+        .parents("label")
+        .should("contain.text", this.selectorsList().loginEmailFieldLabel);
+
+      cy.get(this.selectorsList().loginPasswordField).should("exist");
+      cy.get(this.selectorsList().loginPasswordField)
+        .parents("label")
+        .should("contain.text", this.selectorsList().loginPasswordFieldLabel);
+
+      cy.contains("button", this.selectorsList().signInButtonText).should("be.visible");
+    }
+     
   }
   
   export default HomePage
