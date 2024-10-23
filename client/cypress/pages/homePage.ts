@@ -16,6 +16,10 @@ class HomePage {
         loginPasswordField: '[data-cy="password"]',
         loginEmailFieldLabel: 'Email',
         loginPasswordFieldLabel: 'Password',
+        emailRequiredErrorMessage: 'Email is required',
+        emailInvalidErrorMessage: 'Email is not valid',
+        passwordRequiredErrorMessage: 'Password is required',
+        invalidEmailOrPasswordErrorMessage: 'Invalid email or password',
         // searchField: 'input[placeholder="Search Amazon"]',
         // searchButton: "#nav-search-submit-button",
         // listOfProducts: "div .s-result-list > div",
@@ -74,6 +78,39 @@ class HomePage {
         .should("contain.text", this.selectorsList().loginPasswordFieldLabel);
 
       cy.contains("button", this.selectorsList().signInButtonText).should("be.visible");
+    }
+
+    checkIfLoginModalEmailFieldIsRequired() {
+      cy.contains("div", this.selectorsList().emailRequiredErrorMessage)
+        .prev("label")
+        .should("have.text", this.selectorsList().loginEmailFieldLabel);
+    }
+
+    checkIfLoginModalEmailFieldIsInvalid() {
+      cy.contains("div", this.selectorsList().emailInvalidErrorMessage)
+        .prev("label")
+        .should("have.text", this.selectorsList().loginEmailFieldLabel);
+    }
+
+    checkIfLoginModalPasswordFieldIsRequired() {
+        cy.contains("div", this.selectorsList().passwordRequiredErrorMessage)
+        .prev("label")
+        .should("have.text", this.selectorsList().loginPasswordFieldLabel);
+    }
+
+    checkIfLoginModalHasWrongEmailOrPassword() {
+      cy.contains("div", this.selectorsList().invalidEmailOrPasswordErrorMessage).should("be.visible");
+      cy.contains("button", this.selectorsList().signInButtonText)
+        .prev("div")
+        .should("have.text", this.selectorsList().invalidEmailOrPasswordErrorMessage);
+  }
+
+    typeInEmailLoginField(email: string) {
+      cy.get(this.selectorsList().loginEmailField).type(email);
+    }
+
+    typeInPasswordLoginField(pass: string) {
+      cy.get(this.selectorsList().loginPasswordField).type(pass);
     }
      
   }
