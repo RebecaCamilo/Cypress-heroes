@@ -10,54 +10,33 @@ describe("hero-home-page", () => {
     cy.visit("/");
   });
 
-  describe("User not logged", () => {
-    it.only("reload the page by clicking in title and still not logged", () => {
+  describe.only("User not logged", () => {
+    it("reload the page by clicking in title and still not logged", () => {
       homePage.checkIfUserIsNotLogged();
       homePage.clickInLogo();
       homePage.checkIfUserIsNotLogged();
     });
 
-    it.only("like hero should alert the user need to login", () => {
+    it("like hero should alert the user need to login", () => {
       homePage.clickInLikeButtonOfFirstCard();
       homePage.checkIfAlertMustLoginToLikeIsVisible();
     });
 
-    it("donate to hero should alert the user need to login", () => {
-      cy.get('button[data-cy="money"]').first().click();
-
-      cy.get(".open.modal").should("be.visible");
-      cy.contains("h5", "You must log in to hire this hero.").should(
-        "be.visible"
-      );
-      cy.contains("button", "Ok").should("be.visible");
+    it("hire a hero should alert the user need to login", () => {
+      homePage.clickInMoneyButtonOfFirstCard();
+      homePage.checkIfAlertMustLoginToHireIsVisible();
     });
 
     it("user not logged can see the login button", () => {
-      cy.contains("button", "Login").click();
-
-      cy.contains("h5", "Login").should("be.visible");
-
-      cy.get('[data-cy="email"]').should("exist");
-      cy.get('[data-cy="email"]')
-        .parents("label")
-        .should("contain.text", "Email");
-
-      cy.get('[data-cy="password"]').should("exist");
-      cy.get('[data-cy="password"]')
-        .parents("label")
-        .should("contain.text", "Password");
+      homePage.clickInLoginButton();
+      homePage.checkIfLoginModalIsVisible();
     });
   });
 
-  describe("Verify error messages in Login modal", () => {
+  describe.skip("Verify error messages in Login modal", () => {
     it("login with empty user and pass", () => {
-      cy.contains("button", "Login").click();
-
-      cy.contains("h5", "Login").should("be.visible");
-      cy.get('[data-cy="email"]').should("exist");
-      cy.get('[data-cy="password"]').should("exist");
-
-      cy.contains("button", "Sign in").should("be.visible").click();
+      homePage.clickInLoginButton();
+      homePage.clickInSignInButton();
 
       cy.contains("div", "Email is required").should("be.visible");
       cy.contains("div", "Email is required")
@@ -99,7 +78,7 @@ describe("hero-home-page", () => {
     });
   });
 
-  describe("Logged user", () => {
+  describe.skip("Logged user", () => {
     it("Successful  login", () => {
       cy.contains("button", "Login").click();
 
@@ -219,7 +198,7 @@ describe("hero-home-page", () => {
     });
   });
 
-  describe("Adm logged user", () => {
+  describe.skip("Adm logged user", () => {
     it("Successful login as adm user", () => {
       cy.contains("button", "Login").click();
 
