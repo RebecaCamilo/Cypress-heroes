@@ -12,9 +12,9 @@ describe("hero-home-page", () => {
 
   describe.skip("User not logged", () => {
     it("reload the page by clicking in title and still not logged", () => {
-      homePage.checkIfUserIsNotLogged();
+      homePage.checkIfLoginButtonIsVisible();
       homePage.clickInLogo();
-      homePage.checkIfUserIsNotLogged();
+      homePage.checkIfLoginButtonIsVisible();
     });
 
     it("like hero should alert the user need to login", () => {
@@ -33,7 +33,7 @@ describe("hero-home-page", () => {
     });
   });
 
-  describe.only("Verify error messages in Login modal", () => {
+  describe.skip("Verify error messages in Login modal", () => {
     it("login with empty user and pass", () => {
       homePage.clickInLoginButton();
       homePage.clickInSignInButton();
@@ -62,34 +62,35 @@ describe("hero-home-page", () => {
     });
   });
 
-  describe.skip("Logged user", () => {
+  describe.only("Logged user", () => {
     it("Successful  login", () => {
-      cy.contains("button", "Login").click();
+      homePage.clickInLoginButton();
 
-      cy.get('[data-cy="email"]').type("test@test.com");
-      cy.get('[data-cy="password"]').type("test123");
-      cy.contains("button", "Sign in").click();
+      homePage.typeInEmailLoginField('test@test.com');
+      homePage.typeInPasswordLoginField('test123');
+      homePage.clickInSignInButton();
 
-      cy.contains("button", "Logout").should("be.visible");
+      homePage.checkIfLogoutButtonIsVisible();
     });
 
     it("reload the page by clicking in title and still logged", () => {
+      homePage.clickInLoginButton();
 
-      cy.contains("button", "Login").click();
-      cy.get('[data-cy="email"]').type("test@test.com");
-      cy.get('[data-cy="password"]').type("test123");
-      cy.contains("button", "Sign in").click();
+      homePage.typeInEmailLoginField('test@test.com');
+      homePage.typeInPasswordLoginField('test123');
+      homePage.clickInSignInButton();
 
-      cy.get('img[alt="Cypress Heroes Logo"]').click();
-      cy.contains("button", "Logout").should("be.visible");
+      homePage.clickInLogo();
+
+      homePage.checkIfLogoutButtonIsVisible();
     });
 
-    it("Logged user liked a hero", () => {
+    it.only("Logged user liked a hero", () => {
+      homePage.clickInLoginButton();
 
-      cy.contains("button", "Login").click();
-      cy.get('[data-cy="email"]').type("test@test.com");
-      cy.get('[data-cy="password"]').type("test123");
-      cy.contains("button", "Sign in").click();
+      homePage.typeInEmailLoginField('test@test.com');
+      homePage.typeInPasswordLoginField('test123');
+      homePage.clickInSignInButton();
 
       cy.get('[data-cy="fans"]')
         .first()
@@ -106,12 +107,13 @@ describe("hero-home-page", () => {
             .first()
             .invoke("text")
             .then((updatedFansNumber) => {
-              expect(initialFansNumber + 1).to.eq(parseInt(updatedFansNumber));
+              initialFansNumber += 1;
+              expect(initialFansNumber).to.eq(parseInt(updatedFansNumber));
             });
         });
     });
 
-    it("Logged user donate to a hero", () => {
+    it.only("Logged user donate to a hero", () => {
 
       cy.contains("button", "Login").click();
       cy.get('[data-cy="email"]').type("test@test.com");
@@ -134,8 +136,8 @@ describe("hero-home-page", () => {
             .first()
             .invoke("text")
             .then((updatedSavesNumber) => {
-              expect(initialSavesNumber + 1).to.eq(
-                parseInt(updatedSavesNumber)
+              initialSavesNumber += 1;
+              expect(initialSavesNumber).to.eq(parseInt(updatedSavesNumber)
               );
             });
         });
