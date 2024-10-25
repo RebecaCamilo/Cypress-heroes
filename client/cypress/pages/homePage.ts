@@ -3,6 +3,7 @@ class HomePage {
     selectorsList() {
       return {
         loginButtonText: 'Login',
+        logoutButtonText: 'Logout',
         signInButtonText: 'Sign in',
         cyHeroesLogo: 'img[alt="Cypress Heroes Logo"]',
         likeButton: 'button[data-cy="like"]',
@@ -27,8 +28,12 @@ class HomePage {
       };
     }
 
-    checkIfUserIsNotLogged() {
+    checkIfLoginButtonIsVisible() {
       cy.contains("button", this.selectorsList().loginButtonText).should("be.visible");
+    }
+
+    checkIfLogoutButtonIsVisible() {
+      cy.contains("button", this.selectorsList().logoutButtonText).should("be.visible");
     }
 
     clickInLogo() {
