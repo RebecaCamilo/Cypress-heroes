@@ -6,7 +6,7 @@ class HomePage {
         logoutButtonText: 'Logout',
         signInButtonText: 'Sign in',
         cyHeroesLogo: 'img[alt="Cypress Heroes Logo"]',
-        likeButton: 'button[data-cy="like"]',
+        likeButton: '[data-cy="like"]',
         moneyButton: 'button[data-cy="money"]',
         alertModalMustLoginTo: '.open.modal',
         textOfAlertModalMustLoginToLike: 'You must log in to like.',
@@ -21,6 +21,8 @@ class HomePage {
         emailInvalidErrorMessage: 'Email is not valid',
         passwordRequiredErrorMessage: 'Password is required',
         invalidEmailOrPasswordErrorMessage: 'Invalid email or password',
+        fansField: '[data-cy="fans"]',
+        heroCard: '[data-cy="hero-card"]',
         // searchField: 'input[placeholder="Search Amazon"]',
         // searchButton: "#nav-search-submit-button",
         // listOfProducts: "div .s-result-list > div",
@@ -116,6 +118,25 @@ class HomePage {
 
     typeInPasswordLoginField(pass: string) {
       cy.get(this.selectorsList().loginPasswordField).type(pass);
+    }
+
+    checkTheNumberofFansWhenLikeFirstHero() {
+      cy.get(this.selectorsList().fansField)
+        .first()
+        .invoke("text")
+        .then((fansNumber) => {
+          let initialFansNumber = parseInt(fansNumber);
+
+          this.clickInLikeButtonOfFirstCard();
+
+          cy.get(this.selectorsList().fansField)
+            .first()
+            .invoke("text")
+            .then((updatedFansNumber) => {
+              initialFansNumber += 1;
+              expect(initialFansNumber).to.eq(parseInt(updatedFansNumber));
+            });
+        });
     }
      
   }
