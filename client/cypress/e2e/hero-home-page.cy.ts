@@ -11,7 +11,7 @@ describe("hero-home-page", () => {
     cy.visit("/");
   });
 
-  describe.skip("User not logged", () => {
+  describe("User not logged", () => {
     it("reload the page by clicking in title and still not logged", () => {
       homePage.checkIfLoginButtonIsVisible();
       homePage.clickInLogo();
@@ -63,7 +63,7 @@ describe("hero-home-page", () => {
     });
   });
 
-  describe.only("Logged user", () => {
+  describe("Logged user", () => {
     it("Successful  login", () => {
       homePage.clickInLoginButton();
 
@@ -86,40 +86,23 @@ describe("hero-home-page", () => {
       homePage.checkIfLogoutButtonIsVisible();
     });
 
-    it.only("Logged user liked a hero", () => {
+    it("Logged user liked a hero", () => {
       homePage.clickInLoginButton();
 
       homePage.typeInEmailLoginField(userData.userSuccess.user);
       homePage.typeInPasswordLoginField(userData.userSuccess.pass);
       homePage.clickInSignInButton();
 
-      cy.get('[data-cy="fans"]')
-        .first()
-        .invoke("text")
-        .then((fansNumber) => {
-          let initialFansNumber = parseInt(fansNumber);
-
-          cy.get('[data-cy="hero-card"]')
-            .first()
-            .find('[data-cy="like"]')
-            .click();
-
-          cy.get('[data-cy="fans"]')
-            .first()
-            .invoke("text")
-            .then((updatedFansNumber) => {
-              initialFansNumber += 1;
-              expect(initialFansNumber).to.eq(parseInt(updatedFansNumber));
-            });
-        });
+      homePage.checkTheNumberofFansWhenLikeFirstHero();
+      
     });
 
     it.only("Logged user donate to a hero", () => {
+      homePage.clickInLoginButton();
 
-      cy.contains("button", "Login").click();
-      cy.get('[data-cy="email"]').type(userData.userSuccess.user);
-      cy.get('[data-cy="password"]').type(userData.userSuccess.pass);
-      cy.contains("button", "Sign in").click();
+      homePage.typeInEmailLoginField(userData.userSuccess.user);
+      homePage.typeInPasswordLoginField(userData.userSuccess.pass);
+      homePage.clickInSignInButton();
 
       cy.get('[data-cy="saves"]')
         .first()
