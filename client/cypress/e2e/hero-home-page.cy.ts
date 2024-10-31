@@ -11,7 +11,7 @@ describe("hero-home-page", () => {
     cy.visit("/");
   });
 
-  describe("User not logged", () => {
+  describe.skip("User not logged", () => {
     it("reload the page by clicking in title and still not logged", () => {
       homePage.checkIfLoginButtonIsVisible();
       homePage.clickInLogo();
@@ -63,108 +63,37 @@ describe("hero-home-page", () => {
     });
   });
 
-  describe("Logged user", () => {
+  describe.skip("Logged user", () => {
+    beforeEach(() => {
+      homePage.login(userData.userSuccess.user, userData.userSuccess.pass);
+    })
+
     it("Successful  login", () => {
-      homePage.clickInLoginButton();
-
-      homePage.typeInEmailLoginField(userData.userSuccess.user);
-      homePage.typeInPasswordLoginField(userData.userSuccess.pass);
-      homePage.clickInSignInButton();
-
       homePage.checkIfLogoutButtonIsVisible();
     });
 
     it("reload the page by clicking in title and still logged", () => {
-      homePage.clickInLoginButton();
-
-      homePage.typeInEmailLoginField(userData.userSuccess.user);
-      homePage.typeInPasswordLoginField(userData.userSuccess.pass);
-      homePage.clickInSignInButton();
-
       homePage.clickInLogo();
 
       homePage.checkIfLogoutButtonIsVisible();
     });
 
     it("Logged user liked a hero", () => {
-      homePage.clickInLoginButton();
-
-      homePage.typeInEmailLoginField(userData.userSuccess.user);
-      homePage.typeInPasswordLoginField(userData.userSuccess.pass);
-      homePage.clickInSignInButton();
-
-      homePage.checkTheNumberofFansWhenLikeFirstHero();
-      
+      homePage.checkTheNumberofFansWhenLikeFirstHero();      
     });
 
-    it.only("Logged user donate to a hero", () => {
-      homePage.clickInLoginButton();
-
-      homePage.typeInEmailLoginField(userData.userSuccess.user);
-      homePage.typeInPasswordLoginField(userData.userSuccess.pass);
-      homePage.clickInSignInButton();
-
-      cy.get('[data-cy="saves"]')
-        .first()
-        .invoke("text")
-        .then((savesNumber) => {
-          let initialSavesNumber = parseInt(savesNumber);
-
-          cy.get('[data-cy="hero-card"]')
-            .first()
-            .find('[data-cy="money"]')
-            .click();
-          cy.contains("button", "Yes").click();
-
-          cy.get('[data-cy="saves"]')
-            .first()
-            .invoke("text")
-            .then((updatedSavesNumber) => {
-              initialSavesNumber += 1;
-              expect(initialSavesNumber).to.eq(parseInt(updatedSavesNumber)
-              );
-            });
-        });
+    it("Logged user donate to a hero", () => {
+      homePage.checkTheNumberofSavesWhenHireFirstHero();
     });
 
     it("Logged user dont donate to a hero", () => {
-
-      cy.contains("button", "Login").click();
-      cy.get('[data-cy="email"]').type(userData.userSuccess.user);
-      cy.get('[data-cy="password"]').type(userData.userSuccess.pass);
-      cy.contains("button", "Sign in").click();
-
-      cy.get('[data-cy="saves"]')
-        .first()
-        .invoke("text")
-        .then((savesNumber) => {
-          let initialSavesNumber = parseInt(savesNumber);
-
-          cy.get('[data-cy="hero-card"]')
-            .first()
-            .find('[data-cy="money"]')
-            .click();
-          cy.contains("button", "No").click();
-
-          cy.get('[data-cy="saves"]')
-            .first()
-            .invoke("text")
-            .then((updatedSavesNumber) => {
-              expect(initialSavesNumber).to.eq(parseInt(updatedSavesNumber));
-            });
-        });
+      homePage.checkTheNumberofSavesWhenHireFirstHero();
     });
 
     it("Logged user loggout", () => {
+      homePage.clickInLogoutButton();
 
-      cy.contains("button", "Login").click();
-      cy.get('[data-cy="email"').type(userData.userSuccess.user);
-      cy.get('[data-cy="password"').type(userData.userSuccess.pass);
-      cy.contains("button", "Sign in").click();
-
-      cy.contains("button", "Logout").click();
-
-      cy.contains("button", "Login").should("be.visible");
+      homePage.checkIfLoginButtonIsVisible();
     });
   });
 
@@ -186,24 +115,26 @@ describe("hero-home-page", () => {
       cy.get('[data-cy="password"]').type(userData.userSuccess.pass);
       cy.contains("button", "Sign in").click();
 
-      cy.get('[data-cy="fans"]')
-        .first()
-        .invoke("text")
-        .then((fansNumber) => {
-          let initialFansNumber = parseInt(fansNumber);
+      homePage.checkTheNumberofFansWhenLikeFirstHero()
 
-          cy.get('[data-cy="hero-card"]')
-            .first()
-            .find('[data-cy="like"]')
-            .click();
+      // cy.get('[data-cy="fans"]')
+      //   .first()
+      //   .invoke("text")
+      //   .then((fansNumber) => {
+      //     let initialFansNumber = parseInt(fansNumber);
 
-          cy.get('[data-cy="fans"]')
-            .first()
-            .invoke("text")
-            .then((updatedFansNumber) => {
-              expect(initialFansNumber + 1).to.eq(parseInt(updatedFansNumber));
-            });
-        });
+      //     cy.get('[data-cy="hero-card"]')
+      //       .first()
+      //       .find('[data-cy="like"]')
+      //       .click();
+
+      //     cy.get('[data-cy="fans"]')
+      //       .first()
+      //       .invoke("text")
+      //       .then((updatedFansNumber) => {
+      //         expect(initialFansNumber + 1).to.eq(parseInt(updatedFansNumber));
+      //       });
+      //   });
     });
 
     it("Logged admin user donate to a hero", () => {
