@@ -7,7 +7,7 @@ class HomePage {
         signInButtonText: 'Sign in',
         cyHeroesLogo: 'img[alt="Cypress Heroes Logo"]',
         likeButton: '[data-cy="like"]',
-        moneyButton: 'button[data-cy="money"]',
+        moneyButton: '[data-cy="money"]',
         alertModalMustLoginTo: '.open.modal',
         textOfAlertModalMustLoginToLike: 'You must log in to like.',
         textOfAlertModalMustLoginToHire: 'You must log in to hire this hero.',
@@ -22,7 +22,8 @@ class HomePage {
         passwordRequiredErrorMessage: 'Password is required',
         invalidEmailOrPasswordErrorMessage: 'Invalid email or password',
         fansField: '[data-cy="fans"]',
-        heroCard: '[data-cy="hero-card"]',
+        savesField: '[data-cy="saves"]',
+        // heroCard: '[data-cy="hero-card"]',
         // searchField: 'input[placeholder="Search Amazon"]',
         // searchButton: "#nav-search-submit-button",
         // listOfProducts: "div .s-result-list > div",
@@ -52,6 +53,10 @@ class HomePage {
 
     clickInLoginButton() {
       cy.contains("button", this.selectorsList().loginButtonText).click();
+    }
+
+    clickInLogoutButton() {
+      cy.contains("button", this.selectorsList().logoutButtonText).click();
     }
 
     clickInSignInButton() {
@@ -137,6 +142,35 @@ class HomePage {
               expect(initialFansNumber).to.eq(parseInt(updatedFansNumber));
             });
         });
+    }
+
+    checkTheNumberofSavesWhenHireFirstHero() {
+      cy.get(this.selectorsList().savesField)
+        .first()
+        .invoke("text")
+        .then((savesNumber) => {
+          let initialSavesNumber = parseInt(savesNumber);
+
+          this.clickInMoneyButtonOfFirstCard();
+          cy.contains("button", "Yes").click();
+
+          cy.get(this.selectorsList().savesField)
+            .first()
+            .invoke("text")
+            .then((updatedSavesNumber) => {
+              initialSavesNumber += 1;
+              expect(initialSavesNumber).to.eq(parseInt(updatedSavesNumber)
+              );
+            });
+        });
+    }
+
+    login(email : string, pass : string) {
+      this.clickInLoginButton();
+
+      this.typeInEmailLoginField(email);
+      this.typeInPasswordLoginField(pass);
+      this.clickInSignInButton();
     }
      
   }
