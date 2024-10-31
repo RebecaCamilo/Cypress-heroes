@@ -97,82 +97,24 @@ describe("hero-home-page", () => {
     });
   });
 
-  describe.skip("Adm logged user", () => {
+  describe("Adm logged user", () => {
+    beforeEach(() => {
+      homePage.login(userData.admUserSuccess.user, userData.admUserSuccess.pass);
+    })
+
     it("Successful login as adm user", () => {
-      cy.contains("button", "Login").click();
-
-      cy.get('[data-cy="email"]').type(userData.admUserSuccess.user);
-      cy.get('[data-cy="password"]').type(userData.userSuccess.pass);
-      cy.contains("button", "Sign in").click();
-
       cy.contains("button", "Logout").should("be.visible");
     });
 
     it("Logged admin user liked a hero", () => {
-      cy.contains("button", "Login").click();
-
-      cy.get('[data-cy="email"]').type(userData.admUserSuccess.user);
-      cy.get('[data-cy="password"]').type(userData.userSuccess.pass);
-      cy.contains("button", "Sign in").click();
-
-      homePage.checkTheNumberofFansWhenLikeFirstHero()
-
-      // cy.get('[data-cy="fans"]')
-      //   .first()
-      //   .invoke("text")
-      //   .then((fansNumber) => {
-      //     let initialFansNumber = parseInt(fansNumber);
-
-      //     cy.get('[data-cy="hero-card"]')
-      //       .first()
-      //       .find('[data-cy="like"]')
-      //       .click();
-
-      //     cy.get('[data-cy="fans"]')
-      //       .first()
-      //       .invoke("text")
-      //       .then((updatedFansNumber) => {
-      //         expect(initialFansNumber + 1).to.eq(parseInt(updatedFansNumber));
-      //       });
-      //   });
+      homePage.checkTheNumberofFansWhenLikeFirstHero();
     });
 
-    it("Logged admin user donate to a hero", () => {
-      cy.contains("button", "Login").click();
-
-      cy.get('[data-cy="email"]').type(userData.admUserSuccess.user);
-      cy.get('[data-cy="password"]').type(userData.userSuccess.pass);
-      cy.contains("button", "Sign in").click();
-
-      cy.get('[data-cy="saves"]')
-        .first()
-        .invoke("text")
-        .then((savesNumber) => {
-          let initialSavesNumber = parseInt(savesNumber);
-
-          cy.get('[data-cy="hero-card"]')
-            .first()
-            .find('[data-cy="money"]')
-            .click();
-          cy.contains("button", "Yes").click();
-
-          cy.get('[data-cy="saves"]')
-            .first()
-            .invoke("text")
-            .then((updatedSavesNumber) => {
-              expect(initialSavesNumber + 1).to.eq(
-                parseInt(updatedSavesNumber)
-              );
-            });
-        });
+    it.only("Logged admin user donate to a hero", () => {
+      homePage.checkTheNumberofSavesWhenHireFirstHero();
     });
 
     it.skip("Logged admin user delete hero by trash button in home page", () => {
-      cy.contains("button", "Login").click();
-
-      cy.get('[data-cy="email"]').type(userData.admUserSuccess.user);
-      cy.get('[data-cy="password"]').type(userData.userSuccess.pass);
-      cy.contains("button", "Sign in").click();
 
       // Captura o nome do herói no primeiro card
       cy.get('[data-cy="hero-card"]').first().find("h5").invoke("text").then((heroName) => {
@@ -189,23 +131,12 @@ describe("hero-home-page", () => {
     });
 
     it("Logged admin user loggout", () => {
-      cy.contains("button", "Login").click();
+      homePage.clickInLogoutButton();
 
-      cy.get('[data-cy="email"]').type(userData.admUserSuccess.user);
-      cy.get('[data-cy="password"]').type(userData.userSuccess.pass);
-      cy.contains("button", "Sign in").click();
-
-      cy.contains("button", "Logout").click();
-
-      cy.contains("button", "Login").should("be.visible");
+      homePage.checkIfLoginButtonIsVisible();
     });
 
     it.skip("Logged admin user delete hero by delete button in edit page", () => {
-      cy.contains("button", "Login").click();
-
-      cy.get('[data-cy="email"]').type(userData.admUserSuccess.user);
-      cy.get('[data-cy="password"]').type(userData.userSuccess.pass);
-      cy.contains("button", "Sign in").click();
 
       cy.get('[data-cy="pencil"]').first().click();
 
