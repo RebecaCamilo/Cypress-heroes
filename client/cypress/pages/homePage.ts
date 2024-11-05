@@ -165,6 +165,21 @@ class HomePage {
         });
     }
 
+    checkIfFirstHeroWasDeletedWhenPressTrashButton() {
+      // Captura o nome do herói no primeiro card
+      cy.get('[data-cy="hero-card"]').first().find("h5").invoke("text").then((heroName) => {
+
+        // Exclui o herói clicando no ícone de lixeira no primeiro card
+        cy.get('[data-cy="hero-card"]').first().find('[data-cy="trash"]').click();
+
+        // Confirma a exclusão se necessário
+        cy.contains("button", "Yes").click();
+
+        // Verifica que o card com o nome do herói não existe mais
+        cy.get('[data-cy="hero-card"]').should("not.contain", heroName);
+      });
+    }
+
     login(email : string, pass : string) {
       this.clickInLoginButton();
 
