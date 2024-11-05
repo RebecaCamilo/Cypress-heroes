@@ -110,24 +110,12 @@ describe("hero-home-page", () => {
       homePage.checkTheNumberofFansWhenLikeFirstHero();
     });
 
-    it.only("Logged admin user donate to a hero", () => {
+    it("Logged admin user donate to a hero", () => {
       homePage.checkTheNumberofSavesWhenHireFirstHero();
     });
 
     it.skip("Logged admin user delete hero by trash button in home page", () => {
-
-      // Captura o nome do herói no primeiro card
-      cy.get('[data-cy="hero-card"]').first().find("h5").invoke("text").then((heroName) => {
-
-          // Exclui o herói clicando no ícone de lixeira no primeiro card
-          cy.get('[data-cy="hero-card"]').first().find('[data-cy="trash"]').click();
-
-          // Confirma a exclusão se necessário
-          cy.contains("button", "Yes").click();  // Descomente se houver confirmação
-
-          // Verifica que o card com o nome do herói não existe mais
-          cy.get('[data-cy="hero-card"]').should("not.contain", heroName);
-        });
+      homePage.checkIfFirstHeroWasDeletedWhenPressTrashButton();      
     });
 
     it("Logged admin user loggout", () => {
