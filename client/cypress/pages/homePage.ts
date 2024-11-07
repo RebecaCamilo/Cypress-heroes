@@ -22,12 +22,7 @@ class HomePage {
         passwordRequiredErrorMessage: 'Password is required',
         invalidEmailOrPasswordErrorMessage: 'Invalid email or password',
         fansField: '[data-cy="fans"]',
-        savesField: '[data-cy="saves"]',
-        // heroCard: '[data-cy="hero-card"]',
-        // searchField: 'input[placeholder="Search Amazon"]',
-        // searchButton: "#nav-search-submit-button",
-        // listOfProducts: "div .s-result-list > div",
-        // singleProduct: '[data-cy="title-recipe"] > h2 > a > span'
+        savesField: '[data-cy="saves"]'
       };
     }
 
