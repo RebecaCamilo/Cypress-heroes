@@ -122,14 +122,7 @@ describe("hero-home-page", () => {
       homePage.clickInLogoutButton();
 
       homePage.checkIfLoginButtonIsVisible();
-    });
-
-    it.skip("Logged admin user delete hero by delete button in edit page", () => {
-
-      cy.get('[data-cy="pencil"]').first().click();
-
-      cy.contains('button', 'Delete Hero').click();
-      cy.contains('button', 'Yes').click();
-    });
+    });    
   });
+
 });
