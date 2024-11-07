@@ -1,13 +1,19 @@
 /// <reference types="cypress" />
 
-import HomePage from "../pages/homePage"
+import EditPage from "../pages/editPage"
 import userData from "../fixtures/userData.json"
 
-const homePage = new HomePage()
+const editPage = new EditPage()
 
-describe("hero-home-page", () => {
+describe("hero-edit-page", () => {
     beforeEach(() => {
-        homePage.login(userData.admUserSuccess.user, userData.admUserSuccess.pass);
+        cy.visit("/");
+        editPage.login(userData.admUserSuccess.user, userData.admUserSuccess.pass);
+        editPage.clickInEditButton();
     })
+
+    it("Logged admin user can access edit page", () => {
+        editPage.checkIfInEditHeroPage();
+    });
 
 });
