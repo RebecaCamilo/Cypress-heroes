@@ -89,30 +89,6 @@ class EditPage {
     }
 
 
-
-
-    // checkTheNumberofSavesWhenHireFirstHero() {
-      // cy.get(this.selectorsList().savesField)
-    //     .first()
-    //     .invoke("text")
-    //     .then((savesNumber) => {
-    //       let initialSavesNumber = parseInt(savesNumber);
-
-    //       // this.clickInMoneyButtonOfFirstCard();
-    //       cy.contains("button", "Yes").click();
-
-    //       cy.get(this.selectorsList().savesField)
-    //         .first()
-    //         .invoke("text")
-    //         .then((updatedSavesNumber) => {
-    //           initialSavesNumber += 1;
-    //           expect(initialSavesNumber).to.eq(parseInt(updatedSavesNumber)
-    //           );
-    //         });
-    //     });
-    // }
-
-
     checkTheFieldsInEditPage() {
       let fansNumber: any;
       let savesNumber: any;
