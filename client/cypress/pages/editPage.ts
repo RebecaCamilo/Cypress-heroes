@@ -1,154 +1,208 @@
 class EditPage {
-  
-    selectorsList() {
-      return {
-        loginButtonText: 'Login',
-        logoutButtonText: 'Logout',
-        signInButtonText: 'Sign in',
-        cyHeroesLogo: 'img[alt="Cypress Heroes Logo"]',
-        likeButton: '[data-cy="like"]',
-        moneyButton: '[data-cy="money"]',
-        alertModalMustLoginTo: '.open.modal',
-        textOfAlertModalMustLoginToLike: 'You must log in to like.',
-        textOfAlertModalMustLoginToHire: 'You must log in to hire this hero.',
-        textoOkButtonOfAlertModalMustLogin: 'Ok',
-        loginModalTitle: 'Login',
-        loginEmailField: '[data-cy="email"]',
-        loginPasswordField: '[data-cy="password"]',
-        loginEmailFieldLabel: 'Email',
-        loginPasswordFieldLabel: 'Password',
-        emailRequiredErrorMessage: 'Email is required',
-        emailInvalidErrorMessage: 'Email is not valid',
-        passwordRequiredErrorMessage: 'Password is required',
-        invalidEmailOrPasswordErrorMessage: 'Invalid email or password',
-        fansField: '[data-cy="fans"]',
-        savesField: '[data-cy="saves"]',
-        priceField: '[data-cy="price"]',
-        powersField: '[data-cy="powers"]', //list div > ul > li
-        // heroCard: '[data-cy="hero-card"]',
-        // searchField: 'input[placeholder="Search Amazon"]',
-        // searchButton: "#nav-search-submit-button",
-        // listOfProducts: "div .s-result-list > div",
-        // singleProduct: '[data-cy="title-recipe"] > h2 > a > span'
-        // 
-        // 
-        pencilButton: '[data-cy="pencil"]',
-        heroNameTitleEditPage: '[data-cy="name"]',
-        
-      };
-    }
+  selectorsList() {
+    return {
+      loginButtonText: "Login",
+      logoutButtonText: "Logout",
+      signInButtonText: "Sign in",
+      cyHeroesLogo: 'img[alt="Cypress Heroes Logo"]',
+      likeButton: '[data-cy="like"]',
+      moneyButton: '[data-cy="money"]',
+      alertModalMustLoginTo: ".open.modal",
+      textOfAlertModalMustLoginToLike: "You must log in to like.",
+      textOfAlertModalMustLoginToHire: "You must log in to hire this hero.",
+      textoOkButtonOfAlertModalMustLogin: "Ok",
+      loginModalTitle: "Login",
+      loginEmailField: '[data-cy="email"]',
+      loginPasswordField: '[data-cy="password"]',
+      loginEmailFieldLabel: "Email",
+      loginPasswordFieldLabel: "Password",
+      emailRequiredErrorMessage: "Email is required",
+      emailInvalidErrorMessage: "Email is not valid",
+      passwordRequiredErrorMessage: "Password is required",
+      invalidEmailOrPasswordErrorMessage: "Invalid email or password",
+      fansField: '[data-cy="fans"]',
+      savesField: '[data-cy="saves"]',
+      priceField: '[data-cy="price"]',
+      powersField: '[data-cy="powers"]', //list div > ul > li
+      // heroCard: '[data-cy="hero-card"]',
+      // searchField: 'input[placeholder="Search Amazon"]',
+      // searchButton: "#nav-search-submit-button",
+      // listOfProducts: "div .s-result-list > div",
+      // singleProduct: '[data-cy="title-recipe"] > h2 > a > span'
+      //
+      //
+      pencilButton: '[data-cy="pencil"]',
+      heroNameTitleEditPage: '[data-cy="name"]',
+    };
+  }
 
+  clickInEditButton() {
+    cy.get(this.selectorsList().pencilButton).first().click();
+  }
 
-    
-    clickInEditButton() {
-      cy.get(this.selectorsList().pencilButton).first().click();
-    }
+  checkIfInEditHeroPage() {
+    cy.get('[data-cy="name"]').should("exist");
+  }
 
-    checkIfInEditHeroPage() {
-      cy.get('[data-cy="name"]').should("exist");
-    }
-    
-    checkIfLoginButtonIsVisible() {
-      cy.contains("button", this.selectorsList().loginButtonText).should("be.visible");
-    }
+  checkIfLoginButtonIsVisible() {
+    cy.contains("button", this.selectorsList().loginButtonText).should(
+      "be.visible"
+    );
+  }
 
-    checkIfLogoutButtonIsVisible() {
-      cy.contains("button", this.selectorsList().logoutButtonText).should("be.visible");
-    }
+  checkIfLogoutButtonIsVisible() {
+    cy.contains("button", this.selectorsList().logoutButtonText).should(
+      "be.visible"
+    );
+  }
 
-    clickInLogo() {
-      cy.get(this.selectorsList().cyHeroesLogo).click();
-    }
+  clickInLogo() {
+    cy.get(this.selectorsList().cyHeroesLogo).click();
+  }
 
-    clickInLoginButton() { 
-      cy.contains("button", this.selectorsList().loginButtonText).click();
-    }
+  clickInLoginButton() {
+    cy.contains("button", this.selectorsList().loginButtonText).click();
+  }
 
-    clickInLogoutButton() {
-      cy.contains("button", this.selectorsList().logoutButtonText).click();
-    }
+  clickInLogoutButton() {
+    cy.contains("button", this.selectorsList().logoutButtonText).click();
+  }
 
-    clickInSignInButton() {
-      cy.contains("button", this.selectorsList().signInButtonText).click();
-    }
+  clickInSignInButton() {
+    cy.contains("button", this.selectorsList().signInButtonText).click();
+  }
 
-    typeInEmailLoginField(email: string) {
-      cy.get(this.selectorsList().loginEmailField).type(email);
-    }
+  typeInEmailLoginField(email: string) {
+    cy.get(this.selectorsList().loginEmailField).type(email);
+  }
 
-    typeInPasswordLoginField(pass: string) {
-      cy.get(this.selectorsList().loginPasswordField).type(pass);
-    }
+  typeInPasswordLoginField(pass: string) {
+    cy.get(this.selectorsList().loginPasswordField).type(pass);
+  }
 
-    login(email : string, pass : string) {
-      this.clickInLoginButton();
+  login(email: string, pass: string) {
+    this.clickInLoginButton();
 
-      this.typeInEmailLoginField(email);
-      this.typeInPasswordLoginField(pass);
-      this.clickInSignInButton();
-    }
+    this.typeInEmailLoginField(email);
+    this.typeInPasswordLoginField(pass);
+    this.clickInSignInButton();
+  }
 
+  checkTheFieldsInEditPage() {
+    let fansNumber: any;
+    let savesNumber: any;
+    let priceNumber: any;
 
-    checkTheFieldsInEditPage() {
-      let fansNumber: any;
-      let savesNumber: any;
-      let priceNumber: any;
-
-      // Localiza o card do produto específico
-      cy.get('[data-cy="hero-card"]')
-        .first()
-        .within(() => {
-          cy.get(this.selectorsList().fansField).invoke('text').then((text) => {
-            fansNumber = text;
-            console.log('Valor do produto no card:', fansNumber);
-          });
-
-          cy.get(this.selectorsList().savesField).invoke('text').then((text) => {
-            savesNumber = text;
-            console.log('Valor do produto no card:', savesNumber);
-          });
-
-          cy.get(this.selectorsList().priceField).invoke('text').then((text) => {
-            priceNumber = text;
-            console.log('Valor do produto no card:', priceNumber);
-          });
-  
-          // Clica no botão de editar dentro do card
-          this.clickInEditButton();
-        });
-  
-      cy.then(() => {  // Usando cy.then para garantir que Cypress espere a atribuição de savesNumber
+    // Localiza o card do produto específico
+    cy.get('[data-cy="hero-card"]')
+      .first()
+      .within(() => {
         cy.get(this.selectorsList().fansField)
-          .should('be.visible') // Garante que o campo esteja visível
-          .invoke('text') // Captura o texto do elemento
-          .should('equal', fansNumber) // Verifica se o texto está correto
-          .then(() => {
-            console.log('Valor do produto na página de edição:', fansNumber);
+          .invoke("text")
+          .then((text) => {
+            fansNumber = text;
+            console.log("Valor do produto no card:", fansNumber);
           });
 
-          cy.get(this.selectorsList().savesField)
-          .should('be.visible') // Garante que o campo esteja visível
-          .invoke('text') // Captura o texto do elemento
-          .should('equal', savesNumber) // Verifica se o texto está correto
-          .then(() => {
-            cy.log('Valor do produto na página de edição:', savesNumber);
-            console.log('Valor do produto na página de edição:', savesNumber);
+        cy.get(this.selectorsList().savesField)
+          .invoke("text")
+          .then((text) => {
+            savesNumber = text;
+            console.log("Valor do produto no card:", savesNumber);
           });
 
-          cy.get(this.selectorsList().priceField)
-          .should('be.visible') // Garante que o campo esteja visível
-          .invoke('text') // Captura o texto do elemento
-          .should('equal', priceNumber) // Verifica se o texto está correto
-          .then(() => {
-            cy.log('Valor do produto na página de edição:', priceNumber);
-            console.log('Valor do produto na página de edição:', priceNumber);
+        cy.get(this.selectorsList().priceField)
+          .invoke("text")
+          .then((text) => {
+            priceNumber = text;
+            console.log("Valor do produto no card:", priceNumber);
           });
+
+        // Clica no botão de editar dentro do card
+        this.clickInEditButton();
       });
 
-    }    
-    
+    cy.then(() => {
+      // Usando cy.then para garantir que Cypress espere a atribuição de savesNumber
+      cy.get(this.selectorsList().fansField)
+        .should("be.visible") // Garante que o campo esteja visível
+        .invoke("text") // Captura o texto do elemento
+        .should("equal", fansNumber) // Verifica se o texto está correto
+        .then(() => {
+          console.log("Valor do produto na página de edição:", fansNumber);
+        });
 
-     
+      cy.get(this.selectorsList().savesField)
+        .should("be.visible") // Garante que o campo esteja visível
+        .invoke("text") // Captura o texto do elemento
+        .should("equal", savesNumber) // Verifica se o texto está correto
+        .then(() => {
+          cy.log("Valor do produto na página de edição:", savesNumber);
+          console.log("Valor do produto na página de edição:", savesNumber);
+        });
+
+      cy.get(this.selectorsList().priceField)
+        .should("be.visible") // Garante que o campo esteja visível
+        .invoke("text") // Captura o texto do elemento
+        .should("equal", priceNumber) // Verifica se o texto está correto
+        .then(() => {
+          cy.log("Valor do produto na página de edição:", priceNumber);
+          console.log("Valor do produto na página de edição:", priceNumber);
+        });
+    });
   }
-  
-  export default EditPage
+
+  checkTheFieldsInEditPage2() {
+    let fansNumber: string;
+    let savesNumber: string;
+    let priceNumber: string;
+
+    // Localiza o card do produto específico e captura os valores dos campos
+    cy.get('[data-cy="hero-card"]')
+      .first()
+      .within(() => {
+        this.captureFieldValue(this.selectorsList().fansField, 'fansNumber');
+        this.captureFieldValue(this.selectorsList().savesField, 'savesNumber');
+        this.captureFieldValue(this.selectorsList().priceField, 'priceNumber');
+
+        // Clica no botão de editar dentro do card
+        this.clickInEditButton();
+      });
+
+    // Após capturar e armazenar os valores, compara-os na página de edição
+    cy.wrap(null).then(() => {
+      this.verifyFieldValue(this.selectorsList().fansField, fansNumber);
+      this.verifyFieldValue(this.selectorsList().savesField, savesNumber);
+      this.verifyFieldValue(this.selectorsList().priceField, priceNumber);
+    });
+  }
+
+  // Função auxiliar para capturar o valor do texto do campo e armazená-lo em um alias
+  captureFieldValue(selector: string, alias: string) {
+    cy.get(selector)
+      .invoke('text')
+      .then((text) => {
+        // Atribui o valor capturado à propriedade da classe correspondente
+        (this as any)[alias] = text;
+      });
+
+    // cy.get(this.selectorsList().fansField)
+    // cy.get(selector)
+    //   .invoke('text')
+    //   .as(alias);
+  }
+
+  // Função auxiliar para verificar o valor do campo
+  verifyFieldValue(selector: string, expectedValue: string) {
+    cy.get(selector)
+      .should('be.visible')
+      .invoke('text')
+      .should('equal', expectedValue)
+      .then(() => {
+        cy.log(`Valor do produto na página de edição para ${selector}: ${expectedValue}`);
+      });
+  }
+
+}
+
+export default EditPage;
